@@ -12,7 +12,7 @@ add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 add_definitions(-std=c++11)
 add_definitions(-std=c++0x)
 
-include_directories("." "GeneratedFiles")
+include_directories("${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}")
 
 file(GLOB SOURCE *.cpp)
 file(GLOB HEADER *.h)
@@ -37,10 +37,10 @@ link_directories(${GLEW_LIBRARIES})
 find_path(GLFW_INCLUDE_DIR GLFW/glfw3.h)
 find_library(GLFW_LIBRARY NAMES glfw3 glfw)
 
-IF(UNIX)
-find_package(X11 REQUIRED)
-link_libraries(${X11_LIBRARIES})
-ENDIF(LINUX)
+if(UNIX)
+	find_package(X11 REQUIRED)
+	link_libraries(${X11_LIBRARIES})
+endif(UNIX)
 
 set(GLFW_INCLUDE_DIRS ${GLFW_INCLUDE_DIR})
 set(GLFW_LIBRARIES ${GLFW_LIBRARY})
@@ -66,9 +66,9 @@ link_directories(${Boost_LIBRARY_DIRS})
 add_definitions( -DBOOST_ALL_DYN_LINK )
 
 # Compiler specific stuff
-IF(MSVC)
-    SET(CMAKE_CXX_FLAGS "/EHsc")
-ENDIF(MSVC)
+if(MSVC)
+    set(CMAKE_CXX_FLAGS "/EHsc")
+endif(MSVC)
 
 # Unicode
 add_definitions(-DUNICODE -D_UNICODE)
